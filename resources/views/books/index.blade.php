@@ -4,6 +4,12 @@
 
     <div class="mb-4">
         <h1 class="sticky top-0 mb-2 text-2xl">books</h1>
+        <form method="GET" action="{{ route('books.index') }}" class="mb-4 flex items-center space-x-2">
+            <input type="text" name="title" placeholder="Search by title"
+                   value="{{ request('title') }}" class="input h-10" />
+            <button type="submit" class="btn h-10">Search</button>
+            <a href="{{ route('books.index') }}" class="btn h-10">Clear</a>
+        </form>
         <ul>
             @forelse ($books as $book)
                 <li class="mb-4">
