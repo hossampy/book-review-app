@@ -12,6 +12,8 @@
         </form>
         <div class="filter-container mb-4 flex">
             @php
+                // Define an array of filters, where the keys represent filter values
+                // and the values represent filter labels.
                 $filters = [
                     '' => 'Latest',
                     'popular_last_month' => 'Popular Last Month',
@@ -21,9 +23,15 @@
                 ];
             @endphp
 
+            {{-- Loop through each filter in the $filters array --}}
             @foreach ($filters as $key => $label)
+                {{-- Generate an anchor tag for each filter --}}
                 <a href="{{ route('books.index', [...request()->query(), 'filter' => $key]) }}"
+                   {{-- Set the class of the anchor tag based on the current filter selection --}}
+                   {{-- If the current filter matches the filter being iterated over, or if no filter is selected and it's the default filter, --}}
+                   {{-- then set the class to 'filter-item-active'; otherwise, set it to 'filter-item' --}}
                    class="{{ request('filter') === $key || (request('filter') === null && $key === '') ? 'filter-item-active' : 'filter-item' }}">
+                    {{-- Display the filter label --}}
                     {{ $label }}
                 </a>
             @endforeach
