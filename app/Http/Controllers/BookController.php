@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use function PHPUnit\Framework\matches;
 
 class BookController extends Controller
@@ -27,7 +28,8 @@ class BookController extends Controller
         };
 
 
-        $books = $books->get();
+        $cacheKey = 'books:' . $filter . ':' . $title;
+        $books = cache()->remember($cacheKey, 3600, fn() => $books->get());
         return view('books.index', compact('books'));
     }
 
